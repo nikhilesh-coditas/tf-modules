@@ -8,9 +8,9 @@ variable "environment" {
 variable "product" {
   type = string
 }
-variable "use_case" {
-  type = string
-}
+# variable "use_case" {
+#   type = string
+# }
 variable "binary_media_types" {
   type    = list(any)
   default = []

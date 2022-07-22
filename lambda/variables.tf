@@ -1,3 +1,7 @@
+# variable "api" {
+#   type = string
+# }
+
 variable "memory_size" {
   type = string
 }
@@ -32,9 +36,9 @@ variable "assume_role_policy" {
   type = string
 }
 
-variable "name-prefix" {
-  type = string
-}
+# variable "name-prefix" {
+#   type = string
+# }
 
 variable "policy" {
   type = string
@@ -55,14 +59,15 @@ variable "attach_extra_policy" {
   type = bool
 }
 
-variable "function_name" {
-  type = string
-}
+# variable "function_name" {
+#   type = string
+# }
 
-variable "lambda_security_group_ids" {
-  type = list(string)
-}
+# variable "lambda_security_group_ids" {
+#   type = list(string)
+# }
 
-variable "lambda_subnet_ids" {
-  type = list(string)
-}
+# variable "lambda_subnet_ids" {
+#   type = list(string)
+# }
+

@@ -1,18 +1,18 @@
 resource "aws_api_gateway_rest_api" "this" {
-  name               = var.application != null ? "${var.environment}_${var.product}_${var.application}_${var.use_case}" : "${var.environment}_${var.product}_${var.use_case}"
+  name               = var.application != null ? "${var.environment}_${var.product}_${var.application}_api" : "${var.environment}_${var.product}_api"
   binary_media_types = var.binary_media_types
   api_key_source     = var.api_key_source
   tags = var.application != null ? {
     Environment             = var.environment
     Product                 = var.product
     Application             = var.application
-    Use_case                = var.use_case
+    #Use_case                = var.use_case
     Can_be_deleted          = true
     Created_using_terraform = true
     } : {
     Environment             = var.environment
     Product                 = var.product
-    Use_case                = var.use_case
+    #Use_case                = var.use_case
     Can_be_deleted          = true
     Created_using_terraform = true
   }
@@ -72,7 +72,7 @@ module "api-gateway-enable-cors" {
 resource "aws_api_gateway_method_response" "this" {
   for_each        = local.root_methods
   rest_api_id     = aws_api_gateway_rest_api.this.id
-  resource_id     = each.value.resource_name == "NULL" ? aws_api_gateway_rest_api.this.root_resource_id : aws_api_gateway_resource.this[each.value.tf_resource_id].id
+  resource_id     = each.value.resource_name == "NULL" ? aws_api_gateway_rest_api.this.root_resource_id : aws_api_gateway_resource.this[each.value.resource_name].id
   http_method     = aws_api_gateway_method.this[each.key].http_method
   response_models = lookup(each.value, "response_model_200", null) != null ? { "application/json" : aws_api_gateway_model.this[each.value.response_model_200].name } : {}
   status_code     = "200"

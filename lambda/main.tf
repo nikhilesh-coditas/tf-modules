@@ -3,10 +3,10 @@ resource "aws_lambda_function" "this" {
   architectures     = var.architectures
   # s3_key            = aws_s3_bucket_object.this.key
   # s3_object_version = aws_s3_bucket_object.this.version_id
-  function_name     = var.function_name
+  function_name     = local.global_name
   handler           = var.handler
   role              = aws_iam_role.this.arn
-  description       = var.function_name
+  description       = local.global_name
   memory_size       = var.memory_size
   runtime           = var.runtime
   timeout           = var.timeout
@@ -17,27 +17,27 @@ resource "aws_lambda_function" "this" {
       variables = environment.value
     }
   }
-  dynamic "associate_vpc" {
-    for_each = var.lambda_subnet_ids != null && var.lambda_security_group_ids != null ? [true] : []
-    content {
-      security_group_ids = var.lambda_security_group_ids
-      subnet_ids         = var.lambda_subnet_ids
-    }
-  }
+  # dynamic "associate_vpc" {
+  #   for_each = var.lambda_subnet_ids != null && var.lambda_security_group_ids != null ? [true] : []
+  #   content {
+  #     security_group_ids = var.lambda_security_group_ids
+  #     subnet_ids         = var.lambda_subnet_ids
+  #   }
+  # }
   tags             = local.tags
 }
 resource "aws_iam_role_policy" "this" {
   count  = var.attach_extra_policy ? 1 : 0
-  name   = var.function_name
+  name   = local.global_name
   role   = aws_iam_role.this.id
   policy = var.policy
 }
 
 resource "aws_iam_role" "this" {
-  name               = var.function_name
+  name               = local.global_name
   assume_role_policy = var.assume_role_policy
   path               = "/"
-  description        = var.function_name
+  description        = local.global_name
   tags               = local.tags
 }
 
@@ -46,8 +46,8 @@ resource "aws_iam_role_policy_attachment" "AWSLambdaBasicExecutionRole_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-resource "aws_lambda_layer_version" "this" {
-  filename   = "lambda_layer_payload.zip"
-  layer_name = "Connect360-lambda-layer"
+# resource "aws_lambda_layer_version" "this" {
+#   filename   = 
+#   layer_name = "${var.environment}-${var.product}-lambda-layer"
  
-}
+# }
