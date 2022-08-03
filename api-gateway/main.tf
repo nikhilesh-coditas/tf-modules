@@ -1,18 +1,16 @@
 resource "aws_api_gateway_rest_api" "this" {
-  name               = var.application != null ? "${var.environment}_${var.product}_${var.application}_api" : "${var.environment}_${var.product}_api"
+  name               = var.application != null ? "${var.environment}_${var.product}_${var.application}" : "${var.environment}_${var.product}"
   binary_media_types = var.binary_media_types
   api_key_source     = var.api_key_source
   tags = var.application != null ? {
     Environment             = var.environment
     Product                 = var.product
     Application             = var.application
-    #Use_case                = var.use_case
     Can_be_deleted          = true
     Created_using_terraform = true
     } : {
     Environment             = var.environment
     Product                 = var.product
-    #Use_case                = var.use_case
     Can_be_deleted          = true
     Created_using_terraform = true
   }
@@ -51,7 +49,6 @@ resource "aws_api_gateway_integration" "this" {
 
 resource "aws_lambda_permission" "this" {
   for_each      = local.root_methods
-  statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
   function_name = each.value.function_name
   principal     = "apigateway.amazonaws.com"

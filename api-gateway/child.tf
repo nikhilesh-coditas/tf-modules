@@ -29,11 +29,10 @@ resource "aws_api_gateway_integration" "child" {
 
 resource "aws_lambda_permission" "child" {
   for_each      = local.child_methods
-  statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
   function_name = each.value.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = each.value.resource_name == "NULL" ? "${aws_api_gateway_rest_api.this.execution_arn}/*/*/" : "${aws_api_gateway_rest_api.this.execution_arn}/*/*/${each.value.child_name}"
+  source_arn    = each.value.resource_name == "NULL" ? "${aws_api_gateway_rest_api.this.execution_arn}/*/*/" : "${aws_api_gateway_rest_api.this.execution_arn}/*/*/${each.value.resource_name}/${each.value.child_name}"
 }
 
 module "api-gateway-enable-cors-child" {

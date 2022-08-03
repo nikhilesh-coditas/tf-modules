@@ -15,13 +15,12 @@ resource "aws_iam_role" "this" {
 
 resource "aws_iam_role_policy_attachment" "AWSLambdaBasicExecutionRole_Policy" {
   role       = aws_iam_role.this.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
 }
 
 resource "aws_lambda_function" "this" {
   s3_bucket         = var.bucket_name
   architectures     = var.architectures
-  #s3_key            = aws_s3_bucket_object.this.key
   s3_key            = var.s3_key
   #s3_object_version = aws_s3_bucket_object.this.version_id
   function_name     = local.global_name
@@ -32,6 +31,7 @@ resource "aws_lambda_function" "this" {
   runtime           = var.runtime
   timeout           = var.timeout
   publish           = var.publish
+  layers = var.layers
   dynamic "environment" {
     for_each = length(keys(var.environment_variables)) == 0 ? {} : tomap({ "environment_variables" = var.environment_variables })
     content {

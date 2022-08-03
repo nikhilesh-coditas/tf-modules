@@ -7,3 +7,6 @@ output "lambda_function_invoke_arn" {
 output "lambda_function_name" {
   value = aws_lambda_function.this.function_name
 }
+output "lambda_function_id" {
+  value = aws_lambda_function.this.id
+}

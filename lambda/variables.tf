@@ -8,6 +8,7 @@ variable "assume_role_policy" {
 variable "bucket_name" {
   type = string
 }
+
 variable "environment" {
   type = string
 }
@@ -56,5 +57,9 @@ variable "lambda_subnet_ids" {
   type = list(string)
 }
 variable "lambda_security_group_ids" {
+  type = list(string)
+}
+
+variable "layers" {
   type = list(string)
 }
