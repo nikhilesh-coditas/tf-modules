@@ -19,19 +19,19 @@ resource "aws_iam_role_policy_attachment" "AWSLambdaBasicExecutionRole_Policy" {
 }
 
 resource "aws_lambda_function" "this" {
-  s3_bucket     = var.bucket_name
-  architectures = var.architectures
-  s3_key        = var.s3_key
+  s3_bucket         = var.bucket_name
+  architectures     = var.architectures
+  s3_key            = var.s3_key
   #s3_object_version = aws_s3_bucket_object.this.version_id
-  function_name = local.global_name
-  handler       = var.handler
-  role          = aws_iam_role.this.arn
-  description   = local.global_name
-  memory_size   = var.memory_size
-  runtime       = var.runtime
-  timeout       = var.timeout
-  publish       = var.publish
-  layers        = var.layers
+  function_name     = local.global_name
+  handler           = var.handler
+  role              = aws_iam_role.this.arn
+  description       = local.global_name
+  memory_size       = var.memory_size
+  runtime           = var.runtime
+  timeout           = var.timeout
+  publish           = var.publish
+  layers = var.layers
   dynamic "environment" {
     for_each = length(keys(var.environment_variables)) == 0 ? {} : tomap({ "environment_variables" = var.environment_variables })
     content {
@@ -45,5 +45,5 @@ resource "aws_lambda_function" "this" {
       subnet_ids         = var.lambda_subnet_ids
     }
   }
-  tags = local.tags
+  tags             = local.tags
 }
