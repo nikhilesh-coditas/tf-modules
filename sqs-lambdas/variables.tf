@@ -19,6 +19,11 @@ variable "memory_size" {
   type = string
 }
 
+
+
+
+
+
 variable "policy" {
   type = string
 }
