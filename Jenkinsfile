@@ -1,7 +1,7 @@
 pipeline{
     agent any
     stages{
-        stage{
+        stage('abc'){
             steps{
                 echo "This is dev branch"
             }
