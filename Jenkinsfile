@@ -19,6 +19,7 @@ pipeline{
                 echo "MICROSERVICE"
                 echo "${env.giturl}"
                 echo "${env.GITTAG}"
+                echo "main branch"
             }
         }
     }    
