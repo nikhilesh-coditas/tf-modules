@@ -10,7 +10,7 @@ pipeline{
                 }
                 echo "${IMAGE_TAG}"
                 echo "***********"
-                sh "git tag -l
+                sh "git tag -l"
             }
         }
     }
