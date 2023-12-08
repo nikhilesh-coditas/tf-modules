@@ -20,10 +20,10 @@ pipeline{
             stage('get tag'){
                 steps{
                     script{
-                        def buildInfo = currentBuild
+                        def buildInfo = currentBuild.env
                         print buildInfo
                         print env.getEnvironment()
-                        //def buildEnvVars = buildInfo.getEnvironment()
+                        def buildEnvVars = env.getEnvironment()
                         //for (key in buildEnvVars.keySet()) {
                         //     println "  $key: ${buildEnvVars[key]}"
                         //}
@@ -75,7 +75,7 @@ pipeline{
                 // Update the value of the environment variable in the 'post' section
                 // This uses 'withEnv' to create a new scope where the variable is updated
                 withEnv(['lastTag=prod123']) {
-                    echo "Updated value of MY_VARIABLE: ${env.MY_VARIABLE}"
+                    echo "Updated value of MY_VARIABLE: ${env.lastTag}"
                 }
             }
         }
