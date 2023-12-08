@@ -23,11 +23,11 @@ pipeline{
                         def buildInfo = currentBuild
                         print buildInfo
                         print env.getEnvironment()
-                        def buildEnvVars = buildInfo.getEnvironment()
-                        for (key in buildEnvVars.keySet()) {
-                             println "  $key: ${buildEnvVars[key]}"
-                        }
-                        if (buildEnvVars.containsKey("BuildTag")) {
+                        //def buildEnvVars = buildInfo.getEnvironment()
+                        //for (key in buildEnvVars.keySet()) {
+                        //     println "  $key: ${buildEnvVars[key]}"
+                        //}
+                        if (buildEnvVars.containsKey("lastTag")) {
                             buildEnvVars.each { key, value ->
                                 println "Environment Variable: ${key} = ${value}"
                             }
@@ -69,4 +69,15 @@ pipeline{
                 }
             }
         }
+        post {
+        always {
+            script {
+                // Update the value of the environment variable in the 'post' section
+                // This uses 'withEnv' to create a new scope where the variable is updated
+                withEnv(["lastTag=prod123"]) {
+                    echo "Updated value of MY_VARIABLE: ${env.MY_VARIABLE}"
+                }
+            }
+        }
+    }
     }
