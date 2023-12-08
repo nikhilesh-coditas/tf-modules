@@ -53,7 +53,8 @@ pipeline{
                             println(item)
                             build job: 'mockPipeline', parameters: [[$class: 'StringParameterValue', name: 'microservice', value: "${item}"],
                             [$class: 'StringParameterValue', name: 'COMMIT_MSG', value: "${COMMIT_MSG}"],
-                            [$class: 'StringParameterValue', name: 'COMMIT_USER', value: "${COMMIT_USER}"]]
+                            [$class: 'StringParameterValue', name: 'COMMIT_USER', value: "${COMMIT_USER}"],
+                            [$class: 'StringParameterValue', name: 'BuildTag', value: "${BuildTag}"]]
                             }
                         }
                         else {
