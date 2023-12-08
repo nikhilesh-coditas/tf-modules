@@ -20,8 +20,8 @@ pipeline{
             stage('get tag'){
                 steps{
                     script{
-                        def buildInfo = currentBuild.env
-                        print buildInfo
+                        //def buildInfo = currentBuild.env
+                        //print buildInfo
                         print env.getEnvironment()
                         def buildEnvVars = env.getEnvironment()
                         //for (key in buildEnvVars.keySet()) {
