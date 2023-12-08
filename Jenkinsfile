@@ -19,9 +19,9 @@ pipeline{
             stage('get tag'){
                 steps{
                     script{
-                        def buildInfo = currentBuild.previousBuild
+                        def buildInfo = currentBuild//.previousBuild
                         print buildInfo
-                        print buildInfo.buildVariables
+                        print buildInfo.getBuildVariables()
                         def buildEnvVars = buildInfo.getBuildVariables()
                         if (buildEnvVars) {
                             buildEnvVars.each { key, value ->
