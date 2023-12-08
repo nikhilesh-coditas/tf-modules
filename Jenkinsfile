@@ -19,7 +19,7 @@ pipeline{
             stage('get tag'){
                 steps{
                     script{
-                        def buildInfo = currentBuild.previousBuild.buildVariables.get('BuildTag')
+                        def buildInfo = currentBuild.rawBuild.getPreviousBuild().buildVariables.get('BuildTag')
                         print buildInfo
                     }
                 }
