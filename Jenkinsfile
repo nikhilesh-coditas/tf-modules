@@ -20,7 +20,15 @@ pipeline{
                 steps{
                     script{
                         def buildInfo = currentBuild.rawBuild.getPreviousBuild()
-                        print buildInfo.getAction(hudson.model.ParametersAction)?.getParameter("buildTag")?.getValue()
+                        print buildInfo.getBuildVariables()
+                        def buildEnvVars = buildInfo.getBuildVariables()
+                        if (buildEnvVars) {
+                            buildEnvVars.each { key, value ->
+                                println "Environment Variable: ${key} = ${value}"
+                            }
+                        } else {
+                            println "No environment variables found in the last completed build."
+                        }
                     }
                 }
             }
