@@ -20,8 +20,10 @@ pipeline{
             stage('env injection') {
             steps {
                 script {
-                    def lastTag = sh (script: 'cat /var/jenkins_home/envinjector.properties | grep lastTag | cut -d "=" -f 2', returnStdout: true).trim()
+                    sh" cat /var/jenkins_home/envinjector.properties "
+                    def lastTag = sh (script: 'cat /var/jenkins_home/envinjector.properties | grep "lastTag" | cut -d "=" -f 2', returnStdout: true).trim()
                     echo $lastTag
+
                 }
             }
         }
