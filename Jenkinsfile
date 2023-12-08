@@ -23,6 +23,9 @@ pipeline{
                         print buildInfo
                         print buildInfo.getBuildVariables()
                         def buildEnvVars = buildInfo.getBuildVariables()
+                        for (key in buildEnvVars.keySet()) {
+                             println "  $key: ${buildEnvVars[key]}"
+                        }
                         if (buildEnvVars.containsKey("BuildTag")) {
                             buildEnvVars.each { key, value ->
                                 println "Environment Variable: ${key} = ${value}"
