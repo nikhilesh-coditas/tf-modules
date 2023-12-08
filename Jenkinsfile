@@ -21,7 +21,7 @@ pipeline{
             steps {
                 script {
                     def lastTag = sh (script: 'cat /var/jenkins_home/envinjector.properties | grep lastTag | cut -d "=" -f 2', returnStdout: true).trim()
-                    echo ${env.lastTag}
+                    echo $lastTag
                 }
             }
         }
