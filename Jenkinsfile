@@ -4,6 +4,7 @@ pipeline{
             COMMIT_MSG = sh(script: 'git log -1 --pretty=format:"%s"', returnStdout: true).trim()
             COMMIT_USER = sh(script: 'git log -1 --pretty=format:"%an"', returnStdout: true).trim()
             BuildTag = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
+            BUILD_TAG = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
         }
         stages{
             stage('git'){
