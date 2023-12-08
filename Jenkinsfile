@@ -29,7 +29,7 @@ pipeline{
             stage('Build Microservice'){
                 when {
                     expression { 
-                        ${env.lastTag} == ${env.BuildTag}
+                        env.lastTag == env.BuildTag
                     }
                 }
                 steps{
