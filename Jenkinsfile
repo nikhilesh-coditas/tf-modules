@@ -65,6 +65,7 @@ pipeline{
                 sh """
                     sed -i 's/\${lastTag}/\${BuildTag}/g' /var/jenkins_home/envinjector.properties
                 """
+                writeFile file: '/var/jenkins_home/envinjector.properties', text: 'lastTag="${BuildTag}"\n'
                 }
             }
         }
