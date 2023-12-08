@@ -1,14 +1,16 @@
 pipeline{
     agent any
+        environment{
+            COMMIT_MSG = sh(script: 'git log -1 --pretty=format:"%s"', returnStdout: true).trim()
+            COMMIT_USER = sh(script: 'git log -1 --pretty=format:"%an"', returnStdout: true).trim()
+            BuildTag = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
+        }
         stages{
             stage('git'){
                 steps{
                     script{
-                        COMMIT_MSG = sh(script: 'git log -1 --pretty=format:"%s"', returnStdout: true).trim()
                         echo "1=${COMMIT_MSG}" 
-                        COMMIT_USER = sh(script: 'git log -1 --pretty=format:"%an"', returnStdout: true).trim()
                         echo "2=${COMMIT_USER}"
-                        BuildTag = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
                         echo "3=${BuildTag}"
                         echo "4=${nestEnv}"
                     }
