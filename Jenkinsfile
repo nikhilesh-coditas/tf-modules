@@ -23,7 +23,7 @@ pipeline{
                         sh" cat /var/jenkins_home/envinjector.properties "
                         def lastTag = sh (script: 'cat /var/jenkins_home/envinjector.properties | grep "lastTag" | cut -d "=" -f 2', returnStdout: true).trim()
                         echo "########"
-                        echo ${lastTag}
+                        echo "${lastTag}"
                     }
                 }
             }
