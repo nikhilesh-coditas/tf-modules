@@ -14,6 +14,14 @@ pipeline{
                     }
                 } 
             }
+            stage('get tag'){
+                steps{
+                    script{
+                        def buildInfo = currentBuild.previousBuild.buildVariables
+                        print buildInfo
+                    }
+                }
+            }
             stage('Build Microservice'){
                 steps{
                     script{                
