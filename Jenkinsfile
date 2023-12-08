@@ -18,15 +18,15 @@ pipeline{
                 } 
             }
             stage('env injection') {
-            steps {
-                script {
-                    sh" cat /var/jenkins_home/envinjector.properties "
-                    def lastTag = sh (script: 'cat /var/jenkins_home/envinjector.properties | grep "lastTag" | cut -d "=" -f 2', returnStdout: true).trim()
-                    echo ${lastTag}
-
+                steps {
+                    script {
+                        sh" cat /var/jenkins_home/envinjector.properties "
+                        def lastTag = sh (script: 'cat /var/jenkins_home/envinjector.properties | grep "lastTag" | cut -d "=" -f 2', returnStdout: true).trim()
+                        echo "########"
+                        echo ${lastTag}
+                    }
                 }
             }
-        }
             stage('get tag'){
                 steps{
                     script{
