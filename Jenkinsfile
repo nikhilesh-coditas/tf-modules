@@ -4,7 +4,7 @@ pipeline{
             COMMIT_MSG = sh(script: 'git log -1 --pretty=format:"%s"', returnStdout: true).trim()
             COMMIT_USER = sh(script: 'git log -1 --pretty=format:"%an"', returnStdout: true).trim()
             BuildTag = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
-            BUILD_TAG = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
+            LastTag = sh (script: 'cat /var/jenkins_home/envinjector.properties | grep "lastTag" | cut -d "=" -f 2', returnStdout: true).trim()
         }
         stages{
             stage('git'){
@@ -22,12 +22,16 @@ pipeline{
                     script {
                         sh" cat /var/jenkins_home/envinjector.properties "
                         def lastTag = sh (script: 'cat /var/jenkins_home/envinjector.properties | grep "lastTag" | cut -d "=" -f 2', returnStdout: true).trim()
-                        echo "########"
                         echo "${lastTag}"
                     }
                 }
             }
             stage('Build Microservice'){
+                when {
+                    expression { 
+                        ${env.lastTag} == ${env.BuildTag}
+                    }
+                }
                 steps{
                     script{                
                         def msList=[]
