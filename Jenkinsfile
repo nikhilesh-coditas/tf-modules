@@ -17,6 +17,18 @@ pipeline{
                     }
                 } 
             }
+            stage('env injection'){
+                steps{
+                    script{
+                        properties([
+                        [$class: 'EnvInjectPropertyFile', filePath: '/var/jenkins_home/envinjector.properties']
+                        sh '''
+                            echo \${env.lastTag}
+                        '''
+                    ])
+                    }
+                }
+            }
             stage('get tag'){
                 steps{
                     script{
