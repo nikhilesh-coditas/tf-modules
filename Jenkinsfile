@@ -63,9 +63,9 @@ pipeline{
         always {
             script {
                 sh """
-                    sed -i 's/\${lastTag}/\${BuildTag}/g' /var/jenkins_home/envinjector.properties
+                    sed -i 's/${lastTag}/\${BuildTag}/g' /var/jenkins_home/envinjector.properties
                 """
-                writeFile file: '/var/jenkins_home/envinjector.properties', text: 'lastTag=\${env.BuildTag}'
+                writeFile file: '/var/jenkins_home/envinjector.properties', text: "lastTag=${env.BuildTag}"
                 }
             }
         }
