@@ -21,8 +21,8 @@ pipeline{
                     script{
                         def buildInfo = currentBuild
                         print buildInfo
-                        print buildInfo.getBuildVariables()
-                        def buildEnvVars = buildInfo.getBuildVariables()
+                        print buildInfo.getEnvironment()
+                        def buildEnvVars = buildInfo.getEnvironment()
                         for (key in buildEnvVars.keySet()) {
                              println "  $key: ${buildEnvVars[key]}"
                         }
