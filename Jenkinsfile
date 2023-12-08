@@ -20,7 +20,7 @@ pipeline{
                 steps{
                     script{
                         def buildInfo = currentBuild.rawBuild.getPreviousBuild()
-                        print buildInfo.buildVariables.get('BuildTag')
+                        print buildInfo.getAction(hudson.model.ParametersAction)?.getParameter("buildTag")?.getValue()
                     }
                 }
             }
