@@ -21,7 +21,7 @@ pipeline{
                     script{
                         def buildInfo = currentBuild.previousBuild.id
                         print buildInfo
-                        print buildInfo.getBuildVariables('BuildTag')
+                        print buildInfo.getBuildVariables(BuildTag)
                         def buildEnvVars = buildInfo.getBuildVariables()
                         if (buildEnvVars) {
                             buildEnvVars.each { key, value ->
