@@ -74,7 +74,7 @@ pipeline{
             script {
                 // Update the value of the environment variable in the 'post' section
                 // This uses 'withEnv' to create a new scope where the variable is updated
-                withEnv(["lastTag=prod123"]) {
+                withEnv(['lastTag=prod123']) {
                     echo "Updated value of MY_VARIABLE: ${env.MY_VARIABLE}"
                 }
             }
