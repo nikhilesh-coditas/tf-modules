@@ -20,7 +20,7 @@ pipeline{
                 steps{
                     script{
                         def buildInfo = currentBuild.rawBuild.getPreviousBuild()
-                        print buildInfo.getBuildVariables()
+                        print buildInfo.buildVariables
                         def buildEnvVars = buildInfo.getBuildVariables()
                         if (buildEnvVars) {
                             buildEnvVars.each { key, value ->
