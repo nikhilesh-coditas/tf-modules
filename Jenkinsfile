@@ -27,26 +27,6 @@ pipeline{
                     }
                 }
             }
-            stage('get tag'){
-                steps{
-                    script{
-                        //def buildInfo = currentBuild.env
-                        //print buildInfo
-                        print env.getEnvironment()
-                        def buildEnvVars = env.getEnvironment()
-                        //for (key in buildEnvVars.keySet()) {
-                        //     println "  $key: ${buildEnvVars[key]}"
-                        //}
-                        if (buildEnvVars.containsKey("lastTag")) {
-                            buildEnvVars.each { key, value ->
-                                println "Environment Variable: ${key} = ${value}"
-                            }
-                        } else {
-                            println "No environment variables found in the last completed build."
-                        }
-                    }
-                }
-            }
             stage('Build Microservice'){
                 steps{
                     script{                
@@ -82,10 +62,9 @@ pipeline{
         post {
         always {
             script {
-                // Update the value of the environment variable in the 'post' section
-                // This uses 'withEnv' to create a new scope where the variable is updated
-                withEnv(['lastTag=prod123']) {
-                    echo "Updated value of MY_VARIABLE: ${env.lastTag}"
+                sh """
+                    sed -i 's/\${lastTag}/\${BuildTag}/g' /var/jenkins_home/envinjector.properties
+                """
                 }
             }
         }
