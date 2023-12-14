@@ -7,29 +7,19 @@ pipeline{
             LastTag = sh (script: 'cat /var/jenkins_home/envinjector.properties | grep "lastTag" | cut -d "=" -f 2', returnStdout: true).trim()
         }
         stages{
-            stage('git'){
-                steps{
-                    script{
-                        echo "1=${COMMIT_MSG}" 
-                        echo "2=${COMMIT_USER}"
-                        echo "3=${BuildTag}"
-                        echo "4=${nestEnv}"
-                    }
-                } 
-            }
             stage('env injection') {
                 steps {
                     script {
-                        sh" cat /var/jenkins_home/envinjector.properties "
-                        def lastTag = sh (script: 'cat /var/jenkins_home/envinjector.properties | grep "lastTag" | cut -d "=" -f 2', returnStdout: true).trim()
-                        echo "${lastTag}"
+                    //    sh" cat /var/jenkins_home/envinjector.properties "
+                    //    def lastTag = sh (script: 'cat /var/jenkins_home/envinjector.properties | grep "lastTag" | cut -d "=" -f 2', returnStdout: true).trim()
+                        echo "${LastTag}"
                     }
                 }
             }
             stage('Build Microservice'){
                 when {
                     expression { 
-                        env.lastTag != env.BuildTag
+                        env.LastTag != env.BuildTag
                     }
                 }
                 steps{
