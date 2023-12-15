@@ -15,29 +15,15 @@ pipeline{
                 }
             }
             stage('Build Microservice'){
-                when {
-                    expression { 
-                        env.LastTag != env.BuildTag
-                    }
-                }
                 steps{
                     script{                
                         def msList=[]
-                        currentBuild.changeSets.each { changeSet ->
-                            changeSet.items.each { entry ->        
-                                entry.affectedFiles.each { file ->
-                                    if (file.path.contains('src/app/')) {
-                                    msList << file.path.split('/')[2]  
-                                        }  
-                                    }
-                                }
-                            }
-                        print msList    
-                        def msSet = msList as Set
-                        print msSet
-
+                        def fileLists=sh(script: 'find src/app/ -mindepth 1 -maxdepth 1 -type d', returnStdout: true).trim()
+                        fileLists.readLines().each { file ->
+                            msList << file.split('/')[2]
+                        }
                         if (BuildTag.contains(nestEnv)){
-                            msSet.each { item ->
+                            msList.each { item ->
                             println(item)
                             build job: 'mockPipeline', parameters: [[$class: 'StringParameterValue', name: 'microservice', value: "${item}"],
                             [$class: 'StringParameterValue', name: 'COMMIT_MSG', value: "${COMMIT_MSG}"],
