@@ -1,0 +1,7 @@
+This is release 1. 
+
+Following microservices are deployed. 
+
+Auth,
+Watch,
+Alert

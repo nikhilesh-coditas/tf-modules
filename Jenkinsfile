@@ -22,7 +22,7 @@ pipeline{
                         fileLists.readLines().each { file ->
                             msList << file.split('/')[2]
                         }
-                        if (BuildTag.contains(nestEnv)){
+                        /*if (BuildTag.contains(nestEnv)){
                             msList.each { item ->
                             println(item)
                             build job: 'mockPipeline', parameters: [[$class: 'StringParameterValue', name: 'microservice', value: "${item}"],
@@ -33,7 +33,7 @@ pipeline{
                         }
                         else {
                             echo "Tag and environment doesn't match"
-                        }    
+                        }*/    
                     }
                 }
             }
