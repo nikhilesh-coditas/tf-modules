@@ -10,7 +10,7 @@ pipeline{
             stage('env injection') {
                 steps {
                     script {
-                        echo "${LastTag}"
+                        echo "LastTag"
                     }
                 }
             }
@@ -39,10 +39,5 @@ pipeline{
             }
         }
         post {
-        always {
-            script {
-                writeFile file: '/var/jenkins_home/envinjector.properties', text: "lastTag=${env.BuildTag}"
-                }
-            }
         }
     }
