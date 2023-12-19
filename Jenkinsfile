@@ -3,8 +3,8 @@ pipeline{
         environment{
             COMMIT_MSG = sh(script: 'git log -1 --pretty=format:"%s"', returnStdout: true).trim()
             COMMIT_USER = sh(script: 'git log -1 --pretty=format:"%an"', returnStdout: true).trim()
-            BuildTag = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
-            LastTag = sh (script: 'cat /var/jenkins_home/envinjector.properties | grep "lastTag" | cut -d "=" -f 2', returnStdout: true).trim()
+            //BuildTag = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
+            //LastTag = sh (script: 'cat /var/jenkins_home/envinjector.properties | grep "lastTag" | cut -d "=" -f 2', returnStdout: true).trim()
         }
         stages{
             stage('env injection') {
