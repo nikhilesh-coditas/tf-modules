@@ -22,7 +22,7 @@ pipeline{
                         fileLists.readLines().each { file ->
                             msList << file.split('/')[2]
                         }                        
-                        msList.each { item ->
+                        msList.eachParallel { item ->
                         println(item)
                         /*build job: 'mockPipeline', parameters: [[$class: 'StringParameterValue', name: 'microservice', value: "${item}"],
                         [$class: 'StringParameterValue', name: 'COMMIT_MSG', value: "${COMMIT_MSG}"],
