@@ -17,10 +17,6 @@ pipeline{
                         echo "${scm.getUserRemoteConfigs()}"//[0].getUrl().tokenize('/').last().split("\\.")}"
                         sh "ls"
                         echo "start"
-                        sh'''
-                        content=$(cat release-notes.txt)
-                        '''
-                        sh" echo notes=${content}"
                         echo "done"
                         }
                     }
