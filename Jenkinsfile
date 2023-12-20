@@ -1,4 +1,4 @@
-def content
+@Library('Omnenest') _
 pipeline{
     agent any
         environment{
