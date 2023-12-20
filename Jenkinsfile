@@ -17,9 +17,9 @@ pipeline{
                         echo "${scm.getUserRemoteConfigs()}"//[0].getUrl().tokenize('/').last().split("\\.")}"
                         sh "ls"
                         echo "start"
-                        def file = new File("release-notes.txt")
-                        content = file.text 
-                        println(content)
+                        sh'''
+                        content=$(cat release-notes.txt)
+                        '''
                         echo "done"
                         }
                     }
