@@ -16,9 +16,10 @@ pipeline{
                         echo "job=${JOB_NAME}"
                         echo "${scm.getUserRemoteConfigs()}"//[0].getUrl().tokenize('/').last().split("\\.")}"
                         sh "ls"
-                        def file = new File("./release-notes.txt")
-                        content = file.text
+                        def file = new File("release-notes.txt")
+                        content = file.text 
                         println(content)
+                        echo "done"
                         }
                     }
                 }
