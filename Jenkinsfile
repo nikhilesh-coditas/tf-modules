@@ -22,7 +22,6 @@ pipeline{
                         }
                     }
                 }
-            }
             stage('Build Microservice'){
                 steps{
                     script{                
@@ -52,6 +51,7 @@ pipeline{
                     }
                 }
             }
+        }
         post{
             always{
                 slackSend (color: env.SLACK_COLOR_SUCCESS,channel: "test-notifications", message: "\n *${currentBuild.currentResult}:* \n All microservices are successfully deployed on omnenest ${env.nestEnv} environment. \n Release notes for the build \n ```${env.content}``` ")
