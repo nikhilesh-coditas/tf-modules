@@ -26,6 +26,7 @@ pipeline{
                         println(item)
                         sh '''
                         curl -X POST http://172.16.103.15:7080/job/test-notification/build --user jobtrigger:112ab486fb553d069447e606f2fe99dcb0
+                        sleep 10
                         '''
                         //build job: 'mockPipeline', parameters: [[$class: 'StringParameterValue', name: 'microservice', value: "${item}"],
                         //[$class: 'StringParameterValue', name: 'COMMIT_MSG', value: "${COMMIT_MSG}"],
