@@ -20,6 +20,7 @@ pipeline{
                         sh'''
                         content=$(cat release-notes.txt)
                         '''
+                        sh" echo notes=${content}"
                         echo "done"
                         }
                     }
