@@ -5,12 +5,16 @@ pipeline{
             COMMIT_USER = sh(script: 'git log -1 --pretty=format:"%an"', returnStdout: true).trim()
             //BuildTag = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
             //LastTag = sh (script: 'cat /var/jenkins_home/envinjector.properties | grep "lastTag" | cut -d "=" -f 2', returnStdout: true).trim()
+            //job=determineRepoName()
         }
         stages{
             stage('env injection') {
                 steps {
                     script {
                         echo "LastTag"
+                        echo "job"
+                        echo "${scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]}"
+
                     }
                 }
             }
@@ -32,6 +36,7 @@ pipeline{
                         println(item)
                         sh '''
                         echo ${item}'''
+                        triggerJenkins(ms:item, cmt_msg:COMMIT_MSG, cmt_usr:COMMIT_USER, build_tag:BuildTag)
                         //curl -X POST http://172.16.103.15:7080/job/mockPipeline/build --user jobtrigger:112ab486fb553d069447e606f2fe99dcb0 --data COMMIT_USER=${COMMIT_USER} --data microservice=${item} --data COMMIT_MSG=${COMMIT_MSG} --data BuildTag=dev-release-3
                         //sleep 10
                         }
