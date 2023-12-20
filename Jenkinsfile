@@ -21,9 +21,12 @@ pipeline{
                         def fileLists=sh(script: 'find src/app/ -mindepth 1 -maxdepth 1 -type d', returnStdout: true).trim()
                         fileLists.readLines().each { file ->
                             msList << file.split('/')[2]
-                        }                   
-                        lastms=msList[-1]
-                        println(lastms)   
+                        }          
+                        println(msList)         
+                        def lastms=msList[-1]
+                        println("######")
+                        println(lastms)  
+                        println("######") 
                         msList=msList[0..-2]
                         msList.each { item ->
                         println(item)
