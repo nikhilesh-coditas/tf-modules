@@ -1,3 +1,4 @@
+def content
 pipeline{
     agent any
         environment{
@@ -15,7 +16,10 @@ pipeline{
                         echo "job=${JOB_NAME}"
                         echo "${scm.getUserRemoteConfigs()}"//[0].getUrl().tokenize('/').last().split("\\.")}"
                         sh "ls"
-
+                        def file = new File("./release-notes.txt")
+                        content = file.text
+                        println(content)
+                        }
                     }
                 }
             }
@@ -47,6 +51,10 @@ pipeline{
                         //[$class: 'StringParameterValue', name: 'BuildTag', value: "dev-release-3"]]  
                     }
                 }
+            }
+        post{
+            always{
+                slackSend (color: env.SLACK_COLOR_SUCCESS,channel: "test-notifications", message: "\n *${currentBuild.currentResult}:* \n All microservices are successfully deployed on omnenest ${env.nestEnv} environment. \n Release notes for the build \n ```${env.content}``` ")
             }
         }
     }
