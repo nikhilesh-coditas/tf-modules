@@ -57,9 +57,11 @@ pipeline{
         }
         post{
             always{
+                script{
                 def works = pwd()
-                echo ${works}
+                echo "${works}"
                 slackSend (color: env.SLACK_COLOR_SUCCESS,channel: "test-notifications", message: "\n *${currentBuild.currentResult}:* \n All microservices are successfully deployed on omnenest ${env.nestEnv} environment. \n Release notes for the build \n ```${env.content}``` ")
             }
         }
     }
+}    
