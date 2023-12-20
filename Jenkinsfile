@@ -24,10 +24,13 @@ pipeline{
                         }                        
                         msList.each { item ->
                         println(item)
-                        build job: 'mockPipeline', parameters: [[$class: 'StringParameterValue', name: 'microservice', value: "${item}"],
-                        [$class: 'StringParameterValue', name: 'COMMIT_MSG', value: "${COMMIT_MSG}"],
-                        [$class: 'StringParameterValue', name: 'COMMIT_USER', value: "${COMMIT_USER}"],
-                        [$class: 'StringParameterValue', name: 'BuildTag', value: "dev-release-3"]]
+                        sh '''
+                        curl -X POST http://172.16.103.15:7080/job/mockPipeline/build --user jobtrigger:112ab486fb553d069447e606f2fe99dcb0
+                        '''
+                        //build job: 'mockPipeline', parameters: [[$class: 'StringParameterValue', name: 'microservice', value: "${item}"],
+                        //[$class: 'StringParameterValue', name: 'COMMIT_MSG', value: "${COMMIT_MSG}"],
+                        //[$class: 'StringParameterValue', name: 'COMMIT_USER', value: "${COMMIT_USER}"],
+                        //[$class: 'StringParameterValue', name: 'BuildTag', value: "dev-release-3"]]
                         }  
                     }
                 }
