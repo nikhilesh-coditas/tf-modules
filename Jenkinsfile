@@ -12,7 +12,7 @@ pipeline{
                 steps {
                     script {
                         echo "LastTag"
-                        echo "job=${HOB_NAME}"
+                        echo "job=${JOB_NAME}"
                         echo "${scm.getUserRemoteConfigs()}"//[0].getUrl().tokenize('/').last().split("\\.")}"
 
                     }
