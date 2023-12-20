@@ -31,7 +31,7 @@ pipeline{
                         msList.each { item ->
                         println(item)
                         sh '''
-                        curl -X POST http://172.16.103.15:7080/job/mockPipeline/build --user jobtrigger:112ab486fb553d069447e606f2fe99dcb0 --data microservice=${item} --data COMMIT_MSG=${COMMIT_MSG} --data COMMIT_USER=${COMMIT_USER} --data BuildTag=dev-release-3
+                        curl -X POST http://172.16.103.15:7080/job/mockPipeline/build --user jobtrigger:112ab486fb553d069447e606f2fe99dcb0 --data microservice="${item}" --data COMMIT_MSG=${COMMIT_MSG} --data COMMIT_USER=${COMMIT_USER} --data BuildTag=dev-release-3
                         sleep 10
                         '''
                         build job: 'mockPipeline', parameters: [[$class: 'StringParameterValue', name: 'microservice', value: "${lastms}"],
