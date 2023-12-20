@@ -13,7 +13,7 @@ pipeline{
                     script {
                         echo "LastTag"
                         echo "job"
-                        echo "${scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")}"
+                        echo "${scm.getUserRemoteConfigs()}"//[0].getUrl().tokenize('/').last().split("\\.")}"
 
                     }
                 }
