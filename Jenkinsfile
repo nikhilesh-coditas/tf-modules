@@ -23,6 +23,7 @@ pipeline{
                 }
             stage('Build Microservice'){
                 steps{
+                    withCredentials([usernamePassword(credentialsId: 'triggerjob', passwordVariable: 'token', usernameVariable: 'username')]) {
                     script{                
                         def msList=[]
                         def fileLists=sh(script: 'find src/app/ -mindepth 1 -maxdepth 1 -type d', returnStdout: true).trim()
@@ -48,6 +49,7 @@ pipeline{
                         [$class: 'StringParameterValue', name: 'COMMIT_MSG', value: "${COMMIT_MSG}"],
                         [$class: 'StringParameterValue', name: 'COMMIT_USER', value: "${COMMIT_USER}"],
                         [$class: 'StringParameterValue', name: 'BuildTag', value: "dev-release-3"]]  
+                       }
                     }
                 }
             }
