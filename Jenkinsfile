@@ -43,10 +43,10 @@ pipeline{
                         //curl -X POST http://172.16.103.15:7080/job/mockPipeline/build --user jobtrigger:112ab486fb553d069447e606f2fe99dcb0 --data COMMIT_USER=${COMMIT_USER} --data microservice=${item} --data COMMIT_MSG=${COMMIT_MSG} --data BuildTag=dev-release-3
                         //sleep 10
                         }
-                        //build job: 'mockPipeline', parameters: [[$class: 'StringParameterValue', name: 'microservice', value: "${lastms}"],
-                        //[$class: 'StringParameterValue', name: 'COMMIT_MSG', value: "${COMMIT_MSG}"],
-                        //[$class: 'StringParameterValue', name: 'COMMIT_USER', value: "${COMMIT_USER}"],
-                        //[$class: 'StringParameterValue', name: 'BuildTag', value: "dev-release-3"]]  
+                        build job: 'mockPipeline', parameters: [[$class: 'StringParameterValue', name: 'microservice', value: "${lastms}"],
+                        [$class: 'StringParameterValue', name: 'COMMIT_MSG', value: "${COMMIT_MSG}"],
+                        [$class: 'StringParameterValue', name: 'COMMIT_USER', value: "${COMMIT_USER}"],
+                        [$class: 'StringParameterValue', name: 'BuildTag', value: "dev-release-3"]]  
                     }
                 }
             }
@@ -64,3 +64,32 @@ pipeline{
         }
     }
 }    
+
+
+
+/*sh " chmod +x /opt/kubeconfig/test.sh"
+def changes=sh(script: '/opt/kubeconfig/test.sh', returnStdout: true).trim()
+echo "${changes}"
+def msList=[]
+def list = changes.split(" ")
+echo "${list}"
+println list.size()
+def lastms=list[-1]
+//only one ms 
+if (list.size() == 1){
+    echo "Only one to build= ${lastms}"
+}
+else if (list.size() > 1){
+        echo "lastms: ${lastms}"
+        list=list[0..-2]
+        list.each { element ->
+        println element
+    }
+}
+else if (list.size() == 0){
+    def fileLists=sh(script: 'find src/app/ -mindepth 1 -maxdepth 1 -type d', returnStdout: true).trim()
+    fileLists.readLines().each { file ->
+        msList << file.split('/')[2]
+    }          
+    println(msList)
+}8/
