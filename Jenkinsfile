@@ -35,13 +35,14 @@ pipeline{
                         println(lastms)  
                         println("######") 
                         msList=msList[0..-2]
-                        msList.each { item ->
+                        msList.eachWithIndex { item, index ->
                         println(item)
                         sh '''
                         echo ${item}'''
                         triggerJenkins(ms:item, cmt_msg:COMMIT_MSG, cmt_usr:COMMIT_USER, build_tag:"dev-release-3")
-                        //curl -X POST http://172.16.103.15:7080/job/mockPipeline/build --user jobtrigger:112ab486fb553d069447e606f2fe99dcb0 --data COMMIT_USER=${COMMIT_USER} --data microservice=${item} --data COMMIT_MSG=${COMMIT_MSG} --data BuildTag=dev-release-3
-                        //sleep 10
+                        if ((index + 1) % 4 == 0 && index < elements.size() - 1) {
+                                sh "sleep 30s"
+                            }
                         }
                         build job: 'mockPipeline', parameters: [[$class: 'StringParameterValue', name: 'microservice', value: "${lastms}"],
                         [$class: 'StringParameterValue', name: 'COMMIT_MSG', value: "${COMMIT_MSG}"],
@@ -51,7 +52,7 @@ pipeline{
                 }
             }
         }
-        post{
+        /*post{
             always{
                 script{
                 def works = pwd()
@@ -62,7 +63,7 @@ pipeline{
                 slackSend (color: env.SLACK_COLOR_SUCCESS,channel: "test-notifications", message: "\n *${currentBuild.currentResult}:* \n All microservices are successfully deployed on omnenest ${env.nestEnv} environment. \n Release notes for the build \n ```${content}``` ")
             }
         }
-    }
+    }*/
 }    
 
 
