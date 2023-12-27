@@ -40,10 +40,10 @@ pipeline{
                         println(item)
                         sh '''
                         echo ${item}'''
-                        triggerJenkins(ms:item, cmt_msg:COMMIT_MSG, cmt_usr:COMMIT_USER, build_tag:"dev-release-3")
-                        if ((index + 1) % 2 == 0 && index < item.size() - 1) {
+                        triggerJenkins(job_name:"mockPipeline", ms:item, cmt_msg:COMMIT_MSG, cmt_usr:COMMIT_USER, build_tag:"dev-release-3")
+                        /*if ((index + 1) % 2 == 0 && index < item.size() - 1) {
                                 sh "sleep 30s"
-                            }
+                            }*/
                         }
                         build job: 'mockPipeline', parameters: [[$class: 'StringParameterValue', name: 'microservice', value: "${lastms}"],
                         [$class: 'StringParameterValue', name: 'COMMIT_MSG', value: "${COMMIT_MSG}"],
