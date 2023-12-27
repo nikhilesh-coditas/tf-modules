@@ -40,7 +40,7 @@ pipeline{
                         sh '''
                         echo ${item}'''
                         triggerJenkins(ms:item, cmt_msg:COMMIT_MSG, cmt_usr:COMMIT_USER, build_tag:"dev-release-3")
-                        if ((index + 1) % 2 == 0 && index < elements.size() - 1) {
+                        if ((index + 1) % 2 == 0 && index < item.size() - 1) {
                                 sh "sleep 30s"
                             }
                         }
